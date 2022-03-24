@@ -29,7 +29,7 @@ La URL de la app es: http://localhost:8080/blog
 ## Ejecucion de tests
 
 ```
- mvn clean package
+ mvn test
 ```
 
 ## Endpoints
