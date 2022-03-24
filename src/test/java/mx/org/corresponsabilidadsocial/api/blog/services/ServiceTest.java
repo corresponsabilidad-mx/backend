@@ -1,4 +1,4 @@
-package mx.org.corresponsabilidadsocial.api.blog.controllers;
+package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Publicacion;
 import mx.org.corresponsabilidadsocial.api.blog.repositories.PublicacionRepository;
-import mx.org.corresponsabilidadsocial.api.blog.services.PublicacionService;
 
 @SpringBootTest
 public class ServiceTest {
