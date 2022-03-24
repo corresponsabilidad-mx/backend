@@ -17,7 +17,7 @@ public class PublicacionController {
     @Autowired
     PublicacionService publicacionService;
 
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<?> traerListaPublicaciones() throws Exception{
 
         return new ResponseEntity<>(publicacionService.traerListaPublicaciones(), HttpStatus.OK);

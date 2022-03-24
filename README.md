@@ -18,25 +18,26 @@ git clone https://github.com/corresponsabilidad-mx/backend.git
 ```
  2. Compilar con Maven
 ```
- mvn clean install
+ mvn clean package
 ```
 3. Ejecutar el fat-jar
 ```
 java -jar blog-0.0.1-SNAPSHOT.jar
 ```
-La URL de la app es: http://localhost:8080
+La URL de la app es: http://localhost:8080/blog
+
+## Ejecucion de tests
+
+```
+ mvn clean package
+```
 
 ## Endpoints
 
-Devuelve un Hola Mundo:
+Devuelve una Lista de publicaciones:
 ```
-GET http://localhost:8080/
+GET http://localhost:8080/blog/posts
 ```
 
-Ingresando el parámetro name devuelve Hola + `name`:
-
-```
-GET http://localhost:8080/?name=
-```
 
 
