@@ -1,8 +1,6 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Post {
 
