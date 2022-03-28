@@ -1,11 +1,10 @@
 package mx.org.corresponsabilidadsocial.api.blog.services;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,23 +16,14 @@ import mx.org.corresponsabilidadsocial.api.blog.repositories.PostRepository;
 @SpringBootTest
 public class ServiceTest {
 
-    @Autowired
-    private PostService publicacionService;
+    @Mock
+    PostRepository postRepository
 
     @DisplayName("JUnit test para chequear que se devuelva lsita con publicaciones")
     @Test
-    public void givenListaPublicaciones_whenTraerListaPublicaciones_thenListaPublicaciones(){
+    public void givenPostsList_whengetPosts_thenPostsLists(){
         
-       
-
-        LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
-        Post publicacion1 = new Post(1, "titulo", "imagen", "cuerpoTexto", localDate, true);
-        Post publicacion2 = new Post(1, "tdsadsa", "idsadsan", "cASDSAto", localDate, true);
-
-        PostRepository.posts.add(publicacion1);
-        PostRepository.posts.add(publicacion2);
-               
-              
+                     
         List<Post> ListaPublicacion = publicacionService.getPosts();
 
        

@@ -1,29 +1,35 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Post {
 
     private Integer Id;
-    private String titulo;
-    private String imagen;
-    private String cuerpoTexto;
-    private LocalDate fechaPublicacion;
-    private Boolean status;
-
-    
+    private String title;
+    private String imageUrl;
+    private String text;
+    private LocalDate date;
+    private Status status;
 
     public Post() {
     }
 
-    
-    public Post(Integer id, String titulo, String imagen, String cuerpoTexto, LocalDate fechaPublicacion,
-            Boolean status) {
+    public Post(Integer id, String title, String imageUrl, String text, Status status) {
         Id = id;
-        this.titulo = titulo;
-        this.imagen = imagen;
-        this.cuerpoTexto = cuerpoTexto;
-        this.fechaPublicacion = fechaPublicacion;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.text = text;
+        this.status = status;
+    }
+
+    public Post(Integer id, String title, String imageUrl, String text, LocalDate date, Status status) {
+        Id = id;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.text = text;
+        this.date = date;
         this.status = status;
     }
 
@@ -35,46 +41,44 @@ public class Post {
         Id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getCuerpoTexto() {
-        return cuerpoTexto;
+    public String getText() {
+        return text;
     }
 
-    public void setCuerpoTexto(String cuerpoTexto) {
-        this.cuerpoTexto = cuerpoTexto;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public LocalDate getFechaPublicacion() {
-        return fechaPublicacion;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public Boolean getStatus() {
+    public Status getStatus() {
         return status;
     }
-    
-    public void setStatus(Boolean status) {
+
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    
-    
 }
