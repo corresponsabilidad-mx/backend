@@ -2,11 +2,16 @@ package mx.org.corresponsabilidadsocial.api.blog;
 
 
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import mx.org.corresponsabilidadsocial.api.blog.entities.Publicacion;
-import mx.org.corresponsabilidadsocial.api.blog.repositories.PublicacionRepository;
+import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
+import mx.org.corresponsabilidadsocial.api.blog.repositories.PostRepository;
 
 
 
@@ -14,11 +19,12 @@ import mx.org.corresponsabilidadsocial.api.blog.repositories.PublicacionReposito
 @SpringBootApplication
 public class BlogApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		
+		LocalDate localDate = LocalDate.now(ZoneOffset.UTC);
 		
-		PublicacionRepository.publicaciones.add(new Publicacion(1, "titulo", "imagen", "cuerpoTexto", "fechaPublicacion", true));
+		PostRepository.posts.add(new Post(1, "titulo", "imagen", "cuerpoTexto", localDate , true));
 		
 		SpringApplication.run(BlogApplication.class, args);
 		

@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import mx.org.corresponsabilidadsocial.api.blog.services.PublicacionService;
+import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 
 @RestController
 @RequestMapping("/blog")
-public class PublicacionController {
+public class PostController {
 
     @Autowired
-    PublicacionService publicacionService;
+    PostService PostService;
 
     @GetMapping("/posts")
-    public ResponseEntity<?> traerListaPublicaciones() throws Exception{
+    public ResponseEntity<?> getPosts() throws Exception{
 
-        return new ResponseEntity<>(publicacionService.traerListaPublicaciones(), HttpStatus.OK);
+        return new ResponseEntity<>(PostService.getPosts(), HttpStatus.OK);
     
     }
     

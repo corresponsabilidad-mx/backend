@@ -1,24 +1,23 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
+import java.time.LocalDate;
 
-
-
-public class Publicacion {
+public class Post {
 
     private Integer Id;
     private String titulo;
     private String imagen;
     private String cuerpoTexto;
-    private String fechaPublicacion;
+    private LocalDate fechaPublicacion;
     private Boolean status;
 
     
 
-    public Publicacion() {
+    public Post() {
     }
 
     
-    public Publicacion(Integer id, String titulo, String imagen, String cuerpoTexto, String fechaPublicacion,
+    public Post(Integer id, String titulo, String imagen, String cuerpoTexto, LocalDate fechaPublicacion,
             Boolean status) {
         Id = id;
         this.titulo = titulo;
@@ -60,11 +59,11 @@ public class Publicacion {
         this.cuerpoTexto = cuerpoTexto;
     }
 
-    public String getFechaPublicacion() {
+    public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(String fechaPublicacion) {
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 

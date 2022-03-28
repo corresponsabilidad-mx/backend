@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import mx.org.corresponsabilidadsocial.api.blog.entities.Publicacion;
+import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 
 @Repository
-public class PublicacionRepository {
+public class PostRepository {
 
-    public static List<Publicacion> publicaciones = new ArrayList<>();
+    public static List<Post> posts = new ArrayList<>();
 
     
 
