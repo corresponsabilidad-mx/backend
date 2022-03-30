@@ -18,4 +18,8 @@ public class PostService {
         return postRepository.getPosts();
     }
 
+    public void savePost(Post newPost){
+        postRepository.addPost(newPost);
+    }
+
 }

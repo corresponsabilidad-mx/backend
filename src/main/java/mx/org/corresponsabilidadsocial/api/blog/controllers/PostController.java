@@ -1,11 +1,11 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
+import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
+import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 
@@ -24,6 +24,15 @@ public class PostController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/newPost")
+    public ResponseEntity<?> createPost(@RequestBody Post post){
+        if(post == null){
+            return new ResponseEntity<>("el post esta vacío", HttpStatus.OK);
+        }
+        PostService.savePost(post);
+        return new ResponseEntity<>("Se ha publicado su post", HttpStatus.CREATED);
     }
 
 }
