@@ -18,4 +18,16 @@ public class PostService {
         return postRepository.getPosts();
     }
 
+    public boolean exists(Integer id) {
+        if (postRepository.existsById(id)) {
+
+            return true;
+        }
+        return false;
+    }
+
+    public Object getPostById(Integer id) {
+        return null;
+    }
+
 }

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 
 @RestController
@@ -14,16 +16,27 @@ import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 public class PostController {
 
     @Autowired
-    PostService PostService;
+    PostService postService;
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPosts() throws Exception {
 
-        if (!PostService.getPosts().isEmpty()) {
-            return new ResponseEntity<>(PostService.getPosts(), HttpStatus.OK);
+        if (!postService.getPosts().isEmpty()) {
+            return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new NotFoundException();
     }
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<?> getPostById (@PathVariable Integer id){
+        
+        if (postService.exists(id)){
+            return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
+        }
+        throw new NotFoundException();
+    }
+
+    
 
 }

@@ -29,4 +29,14 @@ public class PostRepository {
         this.posts = posts;
     }
 
+    public boolean existsById(Integer id) {
+
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
