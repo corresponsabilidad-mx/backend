@@ -1,6 +1,5 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
-
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
 
@@ -31,8 +30,8 @@ public class PostController {
     }
 
     @PostMapping("/newPost")
-    public ResponseEntity<?> createPost(@Valid @RequestBody Post post){
-        if(post == null){
+    public ResponseEntity<?> createPost(@Valid @RequestBody Post post) {
+        if (post == null) {
             return new ResponseEntity<>("el post esta vacío", HttpStatus.OK);
         }
         postService.savePost(post);

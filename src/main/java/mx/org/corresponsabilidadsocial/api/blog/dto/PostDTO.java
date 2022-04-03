@@ -2,8 +2,6 @@ package mx.org.corresponsabilidadsocial.api.blog.dto;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
 
-
-
 public class PostDTO {
 
     private String title;

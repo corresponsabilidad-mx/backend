@@ -17,8 +17,8 @@ public class PostRepository {
 
     public PostRepository() {
         posts.add(new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(1, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(1, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
+        posts.add(new Post(2, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
+        posts.add(new Post(3, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
     }
 
     public List<Post> getPosts() {
@@ -29,7 +29,7 @@ public class PostRepository {
         this.posts = posts;
     }
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         Post newPost = new Post(post.getId(), post.getTitle(), post.getImageUrl(), post.getText(), post.getStatus());
         posts.add(newPost);
     }
