@@ -18,7 +18,10 @@ public class PostService {
         return postRepository.getPosts();
     }
 
-    public void savePost(Post newPost){
+    public void savePost(PostDTO postDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        Post newPost = modelMapper.map(postDTO, Post.class);
+        newPost.setId(1);
         postRepository.addPost(newPost);
     }
 
