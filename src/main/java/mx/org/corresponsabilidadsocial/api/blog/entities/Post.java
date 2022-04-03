@@ -1,12 +1,22 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
 import java.time.LocalDate;
+import javax.persistence.*;
+
+import javax.validation.constraints.*;
 
 public class Post {
 
+    @Id
     private Integer Id;
+
+    @NotBlank(message = "Title is mandatory")
+    @Size(min = 10, max = 50)
     private String title;
+    @NotBlank(message = "Image is mandatory")
     private String imageUrl;
+    @NotBlank(message = "Text is mandatory")
+    @Size(min =100)
     private String text;
     private LocalDate date;
     private Status status;
