@@ -27,12 +27,13 @@ public class PostController {
     }
 
     @PostMapping("/newPost")
-    public ResponseEntity<?> createPost(@RequestBody Post post){
-        if(post == null){
-            return new ResponseEntity<>("el post esta vacío", HttpStatus.OK);
+    public ResponseEntity<?> createPost(@RequestBody PostDTO postDTO) {
+        if(postDTO == null){
+            return new ResponseEntity<>("The post is empty", HttpStatus.OK);
+        } else {
+            PostService.savePost(postDTO);
+            return new ResponseEntity<>("Your post has been created", HttpStatus.CREATED);
         }
-        PostService.savePost(post);
-        return new ResponseEntity<>("Se ha publicado su post", HttpStatus.CREATED);
     }
 
 }
