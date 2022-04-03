@@ -14,7 +14,7 @@ public class Post {
     @NotBlank(message = "Image is mandatory")
     private String imageUrl;
     @NotBlank(message = "Text is mandatory")
-    @Size(min =100)
+    @Size(min = 100, max = 25000)
     private String text;
     private LocalDate date;
     private Status status;
