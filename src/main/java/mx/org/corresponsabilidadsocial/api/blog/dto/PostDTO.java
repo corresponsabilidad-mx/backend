@@ -2,7 +2,7 @@ package mx.org.corresponsabilidadsocial.api.blog.dto;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
 
-import java.time.LocalDate;
+
 
 public class PostDTO {
 

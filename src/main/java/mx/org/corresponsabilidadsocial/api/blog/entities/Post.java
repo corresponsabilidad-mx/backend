@@ -1,13 +1,11 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
 import java.time.LocalDate;
-import javax.persistence.*;
 
 import javax.validation.constraints.*;
 
 public class Post {
 
-    @Id
     private Integer Id;
 
     @NotBlank(message = "Title is mandatory")

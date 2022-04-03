@@ -1,6 +1,6 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
-import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
+
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
 
