@@ -38,7 +38,9 @@ Devuelve una Lista de publicaciones:
 ```
 GET http://localhost:8080/blog/posts
 ```
-
+```
+GET http://localhost:8080/blog/post/{id}
+```
 
 
 
