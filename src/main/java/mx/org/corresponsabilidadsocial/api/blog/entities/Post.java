@@ -9,12 +9,12 @@ public class Post {
     private Integer Id;
 
     @NotBlank(message = "Title is mandatory")
-    @Size(min = 10, max = 50)
+    @Size(min = 10, max = 50, message = "characters range must be between 10 and 50 characters")
     private String title;
     @NotBlank(message = "Image is mandatory")
     private String imageUrl;
     @NotBlank(message = "Text is mandatory")
-    @Size(min = 100, max = 25000)
+    @Size(min = 100, message = "minimum is set to 100 characters")
     private String text;
     private LocalDate date;
     private Status status;
