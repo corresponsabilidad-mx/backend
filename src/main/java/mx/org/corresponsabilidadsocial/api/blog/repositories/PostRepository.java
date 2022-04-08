@@ -31,6 +31,7 @@ public class PostRepository {
 
     public void addPost(Post post) {
         Post newPost = new Post(post.getId(), post.getTitle(), post.getImageUrl(), post.getText(), post.getStatus());
+        newPost.setId(4);
         posts.add(newPost);
     }
 

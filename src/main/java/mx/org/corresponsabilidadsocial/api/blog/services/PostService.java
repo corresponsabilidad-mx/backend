@@ -2,6 +2,8 @@ package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
 
+import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,11 @@ public class PostService {
         return postRepository.getPosts();
     }
 
-    public void savePost(Post newPost){
+    public Post savePost(Post newPost){
+        //ModelMapper modelMapper = new ModelMapper();
+        //Post newPost = modelMapper.map(postDTO, Post.class);
         postRepository.addPost(newPost);
+        return newPost;
     }
 
 }

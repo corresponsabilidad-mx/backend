@@ -1,5 +1,8 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
+import mx.org.corresponsabilidadsocial.api.blog.validator.Title;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 import javax.validation.constraints.*;
@@ -7,15 +10,16 @@ import javax.validation.constraints.*;
 public class Post {
 
     private Integer Id;
-
     @NotBlank(message = "Title is mandatory")
     @Size(min = 10, max = 50, message = "characters range must be between 10 and 50")
+    @Title(message = "please try another title")
     private String title;
     @NotBlank(message = "Image is mandatory")
     private String imageUrl;
     @NotBlank(message = "Text is mandatory")
-    @Size(min = 100, message = "The text is too short (minimum 100 characters)")
+    @Size(min = 10, message = "The text is too short (minimum 10 characters)")
     private String text;
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate date;
     private Status status;
 
@@ -76,7 +80,7 @@ public class Post {
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = LocalDate.now();
     }
 
     public Status getStatus() {

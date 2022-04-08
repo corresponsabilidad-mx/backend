@@ -1,5 +1,6 @@
 package mx.org.corresponsabilidadsocial.api.blog.exceptions;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.springframework.http.*;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.validation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
@@ -43,5 +47,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                         errors.put(fieldName, errorMessage);
                 });
                 return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+
+        @ExceptionHandler(ConstraintViolationException.class)
+        public void constraintViolationException(HttpServletResponse response) throws IOException
+        {
+                response.sendError(HttpStatus.BAD_REQUEST.value());
         }
 }
