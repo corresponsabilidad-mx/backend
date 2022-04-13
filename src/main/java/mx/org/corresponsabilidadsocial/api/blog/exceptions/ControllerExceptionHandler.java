@@ -12,25 +12,19 @@ import org.springframework.validation.*;
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-        @ExceptionHandler(NotFoundException.class)
+        @ExceptionHandler(PostNotFound.class)
         @ResponseStatus(code = HttpStatus.NOT_FOUND)
         @ResponseBody
-        public ResponseEntity<ErrorMessage> notFound(NotFoundException ex, WebRequest request) {
-                ErrorMessage apiError = new ErrorMessage(
-                                true, "Post not found", HttpStatus.NOT_FOUND.value());
-                return new ResponseEntity<ErrorMessage>(
-                                apiError, new HttpHeaders(), apiError.getCode());
+        public ResponseEntity<Object> postNotFound(PostNotFound ex, WebRequest request) {
+                return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
 
         @ExceptionHandler(Exception.class)
         @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
         @ResponseBody
-        public ResponseEntity<ErrorMessage> handleAll(Exception ex, WebRequest request) {
-                ErrorMessage apiError = new ErrorMessage(
-                                true, "An error occurred during the process",
-                                HttpStatus.INTERNAL_SERVER_ERROR.value());
-                return new ResponseEntity<ErrorMessage>(
-                                apiError, new HttpHeaders(), apiError.getCode());
+        public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+                return new ResponseEntity<Object>("An error occurred during the process",
+                                HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         @Override

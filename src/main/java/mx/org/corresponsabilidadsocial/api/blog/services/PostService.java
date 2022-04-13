@@ -18,8 +18,12 @@ public class PostService {
         return postRepository.getPosts();
     }
 
-    public void savePost(Post newPost){
-        postRepository.addPost(newPost);
+    public void savePost(Post post) {
+        postRepository.addPost(post);
+    }
+
+    public Post getPostById(Integer id) {
+        return postRepository.getPostById(id);
     }
 
 }

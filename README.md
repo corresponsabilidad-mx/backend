@@ -38,6 +38,14 @@ Devuelve una Lista de publicaciones:
 ```
 GET http://localhost:8080/blog/posts
 ```
+Devuelve el post por numero de Id:
+```
+GET http://localhost:8080/post/{id}
+```
+Crea un Post:
+```
+POST http://localhost:8080/blog/post
+```
 
 
 

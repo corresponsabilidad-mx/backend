@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.PostNotFound;
 
 @Repository
 public class PostRepository {
@@ -30,8 +31,16 @@ public class PostRepository {
     }
 
     public void addPost(Post post) {
-        Post newPost = new Post(post.getId(), post.getTitle(), post.getImageUrl(), post.getText(), post.getStatus());
-        posts.add(newPost);
+        posts.add(post);
     }
 
+    public Post getPostById(Integer id) {
+
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                return posts.get(i);
+            }
+        }
+        throw new PostNotFound(id);
+    }
 }

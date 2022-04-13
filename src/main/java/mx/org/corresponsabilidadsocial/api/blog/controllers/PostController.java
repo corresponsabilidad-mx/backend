@@ -1,7 +1,7 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
-import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.PostNotFound;
 
 import javax.validation.Valid;
 
@@ -20,22 +20,19 @@ public class PostController {
     PostService postService;
 
     @GetMapping("/posts")
-    public ResponseEntity<?> getPosts() throws Exception {
-
-        if (!postService.getPosts().isEmpty()) {
-            return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
-        }
-
-        throw new NotFoundException();
+    public ResponseEntity<?> getPosts() {
+        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
-    @PostMapping("/newPost")
+    @PostMapping("/post")
     public ResponseEntity<?> createPost(@Valid @RequestBody Post post) {
-        if (post == null) {
-            return new ResponseEntity<>("el post esta vacío", HttpStatus.OK);
-        }
         postService.savePost(post);
         return new ResponseEntity<>("Se ha publicado su post", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<?> getPostById(@PathVariable Integer id) {
+        return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
     }
 
 }
