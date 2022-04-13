@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
 
 @Repository
 public class PostRepository {
@@ -28,5 +31,26 @@ public class PostRepository {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+    public boolean existsById(Integer id) {
+
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Post getPostById(Integer id) {
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                return posts.get(i);
+            }
+        }
+        throw new NotFoundException();
+    }
+
+    
 
 }

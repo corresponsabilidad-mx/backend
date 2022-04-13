@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
 import mx.org.corresponsabilidadsocial.api.blog.repositories.PostRepository;
 
 @Service
@@ -16,6 +17,20 @@ public class PostService {
 
     public List<Post> getPosts() {
         return postRepository.getPosts();
+    }
+
+    public boolean exists(Integer id) {
+        if (postRepository.existsById(id)) {
+
+            return true;
+        }
+        return false;
+    }
+
+    public Post getPostById(Integer id) {
+       return postRepository.getPostById(id);
+
+    
     }
 
 }
