@@ -29,10 +29,11 @@ public class PostRepository {
         this.posts = posts;
     }
 
-    public void addPost(Post post) {
-        Post newPost = new Post(post.getId(), post.getTitle(), post.getImageUrl(), post.getText(), post.getStatus());
-        newPost.setId(4);
-        posts.add(newPost);
+    public Post addPost(Post post) {
+        int id = posts.size() + 1;
+        post.setId(id);
+        posts.add(post);
+        return post;
     }
 
 }

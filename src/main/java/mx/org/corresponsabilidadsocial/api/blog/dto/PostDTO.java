@@ -1,11 +1,20 @@
 package mx.org.corresponsabilidadsocial.api.blog.dto;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
+import mx.org.corresponsabilidadsocial.api.blog.validator.Title;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class PostDTO {
 
+    @NotBlank(message = "Title is mandatory")
+    @Size(min = 10, max = 50, message = "characters range must be between 10 and 50")
+    @Title(message = "please try another title")
     private String title;
+    @NotBlank(message = "Image is mandatory")
     private String imageUrl;
+    @NotBlank(message = "Text is mandatory")
     private String text;
     private Status status;
 

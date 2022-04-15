@@ -1,7 +1,6 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
 import mx.org.corresponsabilidadsocial.api.blog.validator.Title;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -19,8 +18,7 @@ public class Post {
     @NotBlank(message = "Text is mandatory")
     @Size(min = 10, message = "The text is too short (minimum 10 characters)")
     private String text;
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
     private Status status;
 
     public Post() {
@@ -80,7 +78,7 @@ public class Post {
     }
 
     public void setDate(LocalDate date) {
-        this.date = LocalDate.now();
+        this.date = date;
     }
 
     public Status getStatus() {

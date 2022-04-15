@@ -20,11 +20,10 @@ public class PostService {
         return postRepository.getPosts();
     }
 
-    public Post savePost(Post newPost){
-        //ModelMapper modelMapper = new ModelMapper();
-        //Post newPost = modelMapper.map(postDTO, Post.class);
-        postRepository.addPost(newPost);
-        return newPost;
+    public Post savePost(PostDTO postDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        Post newPost = modelMapper.map(postDTO, Post.class);
+        return postRepository.addPost(newPost);
     }
 
 }
