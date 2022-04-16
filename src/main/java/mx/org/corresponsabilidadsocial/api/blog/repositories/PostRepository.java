@@ -36,11 +36,9 @@ public class PostRepository {
 
     public Post getPostById(Integer id) {
 
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(id)) {
-                return posts.get(i);
-            }
-        }
-        throw new PostNotFound(id);
+        return posts.get(id);
+            
+        
+     
     }
 }
