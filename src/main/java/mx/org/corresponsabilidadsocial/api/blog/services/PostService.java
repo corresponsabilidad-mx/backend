@@ -16,6 +16,8 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     public List<Post> getPosts() {
         return postRepository.getPosts();
     }
@@ -29,13 +31,17 @@ public class PostService {
     }
 
     public Post savePost(PostDTO postDTO){
-        ModelMapper modelMapper = new ModelMapper();
         Post newPost = modelMapper.map(postDTO, Post.class);
         return postRepository.addPost(newPost);
     }
 
     public void deletePostById(Integer id){
         postRepository.deletePostById(id);
+    }
+
+    public Post updatePost(Integer id, PostDTO postDTO){
+        Post post = modelMapper.map(postDTO, Post.class);
+        return postRepository.updatePostById(id, post);
     }
 
 }

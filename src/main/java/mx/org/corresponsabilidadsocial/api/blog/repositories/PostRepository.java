@@ -54,4 +54,16 @@ public class PostRepository {
         }
     }
 
+    public Post updatePostById(Integer id, Post post){
+        for(int i=0; i<posts.size(); i++) {
+            if (posts.get(i).getId() == id) {
+                posts.get(i).setTitle(post.getTitle());
+                posts.get(i).setText(post.getText());
+                posts.get(i).setImageUrl(post.getImageUrl());
+                posts.get(i).setStatus(post.getStatus());
+                posts.get(i).setDate(LocalDate.now());
+            }
+        }
+        return posts.get(id-1);
+    }
 }
