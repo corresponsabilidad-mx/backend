@@ -20,10 +20,22 @@ public class PostService {
         return postRepository.getPosts();
     }
 
+    public boolean exists(Integer id) {
+        if (postRepository.existsById(id)) {
+
+            return true;
+        }
+        return false;
+    }
+
     public Post savePost(PostDTO postDTO){
         ModelMapper modelMapper = new ModelMapper();
         Post newPost = modelMapper.map(postDTO, Post.class);
         return postRepository.addPost(newPost);
+    }
+
+    public void deletePostById(Integer id){
+        postRepository.deletePostById(id);
     }
 
 }

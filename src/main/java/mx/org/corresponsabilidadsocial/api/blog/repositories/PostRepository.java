@@ -29,11 +29,29 @@ public class PostRepository {
         this.posts = posts;
     }
 
+    public boolean existsById(Integer id) {
+
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Post addPost(Post post) {
         int id = posts.size() + 1;
         post.setId(id);
         posts.add(post);
         return post;
+    }
+
+    public void deletePostById(Integer id){
+        for(int i=0; i<posts.size(); i++) {
+            if (posts.get(i).getId() == id) {
+                posts.remove(i);
+            }
+        }
     }
 
 }
