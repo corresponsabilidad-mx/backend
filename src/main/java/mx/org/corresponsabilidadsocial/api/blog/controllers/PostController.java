@@ -39,18 +39,12 @@ public class PostController {
 
     @DeleteMapping("/post/delete/{id}")
     public ResponseEntity deletePost(@PathVariable Integer id){
-        if(!postService.exists(id)){
-            throw new NotFoundException();
-        }
         postService.deletePostById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("post/update/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Integer id, @Valid @RequestBody PostDTO postDTO){
-        if(!postService.exists(id)){
-            throw new NotFoundException();
-        }
         return ResponseEntity.ok(postService.updatePost(id, postDTO));
     }
 
