@@ -33,6 +33,7 @@ public class PostRepository {
     public Post addPost(Post post) {
         int id = posts.size() + 1;
         post.setId(id);
+        post.setDate(LocalDate.now());
         posts.add(post);
         return post;
     }
