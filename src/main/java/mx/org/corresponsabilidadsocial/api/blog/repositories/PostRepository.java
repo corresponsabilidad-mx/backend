@@ -30,14 +30,35 @@ public class PostRepository {
         this.posts = posts;
     }
 
-    public void addPost(Post post) {
+    public Post addPost(Post post) {
+        int id = posts.size() + 1;
+        post.setId(id);
         posts.add(post);
+        return post;
     }
 
     public Post getPostById(Integer id) {
+        return posts.get(id);
+    }
 
+    public boolean deletePostById(Integer id) {
         for (int i = 0; i < posts.size(); i++) {
             if (posts.get(i).getId().equals(id)) {
+                posts.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Post updatePostById(Integer id, Post post) {
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getId().equals(id)) {
+                posts.get(i).setTitle(post.getTitle());
+                posts.get(i).setText(post.getText());
+                posts.get(i).setImageUrl(post.getImageUrl());
+                posts.get(i).setStatus(post.getStatus());
+                posts.get(i).setDate(LocalDate.now());
                 return posts.get(i);
             }
         }
