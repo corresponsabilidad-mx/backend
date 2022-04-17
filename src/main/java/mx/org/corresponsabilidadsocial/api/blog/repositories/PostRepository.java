@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
-import mx.org.corresponsabilidadsocial.api.blog.exceptions.PostNotFound;
+
 
 @Repository
 public class PostRepository {

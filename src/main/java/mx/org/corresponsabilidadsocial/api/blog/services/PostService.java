@@ -30,7 +30,6 @@ public class PostService {
             }
         }
         throw new PostNotFound(id);
-        
     }
 
 }
