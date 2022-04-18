@@ -11,7 +11,6 @@ import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
 import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFound;
 
-
 @Repository
 public class PostRepository {
 
