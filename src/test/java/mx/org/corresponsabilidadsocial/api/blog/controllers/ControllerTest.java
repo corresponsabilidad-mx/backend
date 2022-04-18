@@ -1,58 +1,60 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.MimeTypeUtils;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
-import mx.org.corresponsabilidadsocial.api.blog.repositories.PostRepository;
-import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 
-@WebMvcTest(PostController.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private PostService service;
-
-    @MockBean
-    private PostRepository repo;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    public void getAllPosts() throws Exception {
-
-        List<Post> posts = new ArrayList<>();
-
-        posts.add(new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(2, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(3, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
-
-        Mockito.when(service.getPosts()).thenReturn(posts);
-
-        mockMvc.perform(get("/blog/posts")).andExpect(status().isOk());
-
+    void findById() throws Exception {
+        Post post = createPost();
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/blog/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(post)))
+                .andExpect(status().isCreated());
+        var findById = mockMvc.perform(
+                get("/blog/post/1").accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+        var obj = objectMapper.readValue(findById.getResponse().getContentAsString(), Post.class);
+        assert obj.getId().equals(1);
+       
     }
 
-    @Test
-    public void testGetPostById() throws Exception {
-        Post post = new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED);
+    private Post createPost() {
+        Post post = new Post(1, "un titulo no muy corto", "img/img.jpg", "un texto de por lo menos 100 caracteres " +
+                "porque si no da error y no me gustan las peliculas de star wars", LocalDate.now(), Status.PUBLISHED);
 
-        Mockito.when(service.getPostById(1)).thenReturn(post);
-
-        mockMvc.perform(get("/blog/post/{id}", 1)).andExpect(status().isOk());
+        return post;
     }
-
 }

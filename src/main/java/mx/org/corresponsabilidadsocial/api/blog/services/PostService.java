@@ -1,11 +1,15 @@
 package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.filter.Filter;
 import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.exceptions.PostNotFound;
@@ -28,17 +32,18 @@ public class PostService {
     }
 
     public Post getPostById(Integer id) {
-        for (int i = 0; i < postRepository.getPosts().size(); i++) {
-            if (postRepository.getPosts().get(i).getId().equals(id)) {
-                return postRepository.getPostById(id - 1);
-            }
-        }
-        throw new PostNotFound(id);
+        Optional<Post> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+
+        return opt.orElseThrow(() -> new PostNotFound(id));
     }
 
     public Post savePost(PostDTO postDTO) {
         Post newPost = modelMapper.map(postDTO, Post.class);
         return postRepository.addPost(newPost);
+
     }
 
     public void deletePostById(Integer id) {
