@@ -12,10 +12,17 @@ import org.springframework.validation.*;
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-        @ExceptionHandler(PostNotFound.class)
+        @ExceptionHandler(NotFound.class)
         @ResponseStatus(code = HttpStatus.NOT_FOUND)
         @ResponseBody
-        public ResponseEntity<Object> postNotFound(PostNotFound ex, WebRequest request) {
+        public ResponseEntity<Object> notFound(NotFound ex, WebRequest request) {
+                return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+        @ExceptionHandler(Duplicated.class)
+        @ResponseStatus(code = HttpStatus.NOT_FOUND)
+        @ResponseBody
+        public ResponseEntity<Object> notFound(Duplicated ex, WebRequest request) {
                 return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
 
