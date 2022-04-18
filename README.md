@@ -46,9 +46,12 @@ Crea un Post:
 ```
 POST http://localhost:8080/blog/post
 ```
-
-
-
-
-
+Modifica un Post por Id
+```
+PUT http://localhost:8080/blog/post/update/{id}
+```
+Borra un Post por Id
+```
+DEL http://localhost:8080/blog/post/delete/{id}
+```
 

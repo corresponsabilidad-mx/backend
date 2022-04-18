@@ -1,13 +1,18 @@
 # Version changelog
 
-### Version 1.0
+### Version 0.1
 
 -GET all posts
 
-#### Version 1.1
+#### Version 0.2
 
 -GET post by Id
 
-#### Version 1.2
+#### Version 0.3
 
 -POST post
+
+#### Version 0.4
+
+-PUT Post
+-DEL Post
