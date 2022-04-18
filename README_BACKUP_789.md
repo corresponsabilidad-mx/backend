@@ -38,6 +38,7 @@ Devuelve una Lista de publicaciones:
 ```
 GET http://localhost:8080/blog/posts
 ```
+<<<<<<< HEAD
 Devuelve el post por numero de Id:
 ```
 GET http://localhost:8080/post/{id}
@@ -54,4 +55,13 @@ Borra un Post por Id
 ```
 DEL http://localhost:8080/blog/post/delete/{id}
 ```
+=======
+```
+GET http://localhost:8080/blog/post/{id}
+```
+
+
+
+
+>>>>>>> origin/develop
 

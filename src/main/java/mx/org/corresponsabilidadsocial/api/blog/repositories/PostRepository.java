@@ -4,14 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
-import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFoundException;
+import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFound;
 
 @Repository
 public class PostRepository {
@@ -20,8 +17,8 @@ public class PostRepository {
 
     public PostRepository() {
         posts.add(new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(1, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(1, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
+        posts.add(new Post(2, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
+        posts.add(new Post(3, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
     }
 
     public List<Post> getPosts() {
@@ -32,25 +29,39 @@ public class PostRepository {
         this.posts = posts;
     }
 
-    public boolean existsById(Integer id) {
+    public Post addPost(Post post) {
+        int id = posts.size() + 1;
+        post.setId(id);
+        post.setDate(LocalDate.now());
+        posts.add(post);
+        return post;
+    }
 
+    public Post getPostById(Integer id) {
+        return posts.get(id);
+    }
+
+    public boolean deletePostById(Integer id) {
         for (int i = 0; i < posts.size(); i++) {
             if (posts.get(i).getId().equals(id)) {
+                posts.remove(i);
                 return true;
             }
         }
         return false;
     }
 
-    public Post getPostById(Integer id) {
+    public Post updatePostById(Integer id, Post post) {
         for (int i = 0; i < posts.size(); i++) {
             if (posts.get(i).getId().equals(id)) {
+                posts.get(i).setTitle(post.getTitle());
+                posts.get(i).setText(post.getText());
+                posts.get(i).setImageUrl(post.getImageUrl());
+                posts.get(i).setStatus(post.getStatus());
+                posts.get(i).setDate(LocalDate.now());
                 return posts.get(i);
             }
         }
-        throw new NotFoundException();
+        throw new NotFound(id);
     }
-
-    
-
 }
