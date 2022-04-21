@@ -2,6 +2,7 @@ package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,11 @@ public class PostService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public List<Post> getPosts() {
+    public List<Post> getPosts() throws ExecutionException, InterruptedException {
         return postRepository.getPosts();
     }
 
-    public void savePost(Post post) {
-        postRepository.addPost(post);
-    }
-
-    public Post getPostById(Integer id) {
+    public Post getPostById(String id) throws ExecutionException, InterruptedException {
         Optional<Post> opt = postRepository.getPosts()
                 .stream()
                 .filter(post -> post.getId().equals(id))
@@ -39,7 +36,7 @@ public class PostService {
         return opt.orElseThrow(() -> new NotFound(id));
     }
 
-    public Post savePost(PostDTO postDTO) {
+    public String savePost(PostDTO postDTO) throws Exception {
         Post newPost = modelMapper.map(postDTO, Post.class);
         Boolean check = postRepository.getPosts().stream()
                 .filter(p -> p.getTitle().equals(newPost.getTitle()))
@@ -51,7 +48,7 @@ public class PostService {
         throw new Duplicated();
 
     }
-
+/*
     public void deletePostById(Integer id) {
         if (!postRepository.deletePostById(id)) {
             throw new NotFound(id);
@@ -62,5 +59,5 @@ public class PostService {
         Post post = modelMapper.map(postDTO, Post.class);
         return postRepository.updatePostById(id, post);
     }
-
+*/
 }

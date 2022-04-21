@@ -1,9 +1,16 @@
 package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 
-import java.util.List;
+import java.util.*;
+
+import java.util.concurrent.ExecutionException;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.Date;
+import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.*;
+import mx.org.corresponsabilidadsocial.api.blog.services.FirebaseInitializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
@@ -13,34 +20,57 @@ import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFound;
 @Repository
 public class PostRepository {
 
-    private List<Post> posts = new ArrayList<>();
+    @Autowired
+    private FirebaseInitializer firebaseInitializer;
 
-    public PostRepository() {
-        posts.add(new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(2, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(3, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
-    }
+    public List<Post> getPosts() throws ExecutionException, InterruptedException {
+        List<Post> posts = new ArrayList<>();
+        Post post = null;
 
-    public List<Post> getPosts() {
+        Iterable<DocumentReference> documentsReference = getCollection().listDocuments();
+        Iterator<DocumentReference> iterator = documentsReference.iterator();
+
+        while (iterator.hasNext()){
+            DocumentReference documentReference = iterator.next();
+            ApiFuture<DocumentSnapshot> future = documentReference.get();
+            DocumentSnapshot documentSnapshot = future.get();
+
+            post = documentSnapshot.toObject(Post.class);
+            posts.add(post);
+        }
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public String addPost(Post post) throws Exception {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("id", post.getId());
+        docData.put("title", post.getTitle());
+        docData.put("imageUrl", post.getImageUrl());
+        docData.put("text", post.getText());
+        docData.put("date", Timestamp.now());
+        docData.put("status", post.getStatus());
+
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document().create(docData);
+        if (!writeResultApiFuture.get().equals(null)){
+            return writeResultApiFuture.get().getUpdateTime().toString();
+        }
+        throw new Exception();
     }
 
-    public Post addPost(Post post) {
-        int id = posts.size() + 1;
-        post.setId(id);
-        post.setDate(LocalDate.now());
-        posts.add(post);
-        return post;
-    }
+    public Post getPostById(String id) throws ExecutionException, InterruptedException {
+        DocumentReference documentReference = getCollection().document(id);
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
+        DocumentSnapshot document = future.get();
 
-    public Post getPostById(Integer id) {
-        return posts.get(id);
+        Post post = null;
+        if (document.exists()){
+            post = document.toObject(Post.class);
+            return post;
+        }
+        return null;
     }
-
+/*
     public boolean deletePostById(Integer id) {
         for (int i = 0; i < posts.size(); i++) {
             if (posts.get(i).getId().equals(id)) {
@@ -63,5 +93,11 @@ public class PostRepository {
             }
         }
         throw new NotFound(id);
+    }
+
+     */
+
+    private CollectionReference getCollection() {
+        return firebaseInitializer.getFirestore().collection("posts");
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/blog")
 public class PostController {
@@ -21,20 +23,21 @@ public class PostController {
     PostService postService;
 
     @GetMapping("/posts")
-    public ResponseEntity<?> getPosts() {
+    public ResponseEntity<?> getPosts() throws ExecutionException, InterruptedException {
         return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<?> getPostById(@PathVariable Integer id) {
+    public ResponseEntity<?> getPostById(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/post")
-    public ResponseEntity<?> createPost(@Valid @RequestBody PostDTO postDTO) {
+    @PostMapping("/post/create")
+    public ResponseEntity<?> createPost(@Valid @RequestBody PostDTO postDTO) throws Exception {
         return new ResponseEntity<>(postService.savePost(postDTO), HttpStatus.CREATED);
     }
 
+    /*
     @PutMapping("post/update/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Integer id, @Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(postService.updatePost(id, postDTO));
@@ -45,7 +48,11 @@ public class PostController {
         postService.deletePostById(id);
         return ResponseEntity.noContent().build();
     }
-
+*/
+    @GetMapping("/test")
+    public ResponseEntity<String> testGetEndpoint(){
+        return ResponseEntity.ok("Test get Endpoint is working");
+    }
        
 
 }
