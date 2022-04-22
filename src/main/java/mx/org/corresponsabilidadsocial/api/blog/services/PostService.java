@@ -2,9 +2,11 @@ package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
+
+import com.google.cloud.firestore.DocumentReference;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.asm.Advice.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,41 +25,40 @@ public class PostService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public List<Post> getPosts() throws ExecutionException, InterruptedException {
+    public List<Post> getPosts() throws Exception {
         return postRepository.getPosts();
     }
 
-    public Post getPostById(String id) throws ExecutionException, InterruptedException {
-        Optional<Post> opt = postRepository.getPosts()
-                .stream()
-                .filter(post -> post.getId().equals(id))
-                .findFirst();
-
-        return opt.orElseThrow(() -> new NotFound(id));
+    public Post getPostById(String id) throws Exception {
+        Post post = postRepository.getPostById(id);
+        if (!post.equals(null)) {
+            return post;
+        }
+        throw new NotFound(id);
     }
 
     public String savePost(PostDTO postDTO) throws Exception {
         Post newPost = modelMapper.map(postDTO, Post.class);
-        Boolean check = postRepository.getPosts().stream()
+        Boolean isDup = postRepository.getPosts().stream()
                 .filter(p -> p.getTitle().equals(newPost.getTitle()))
-                .findAny()
+                .findFirst()
                 .isPresent();
-        if (!check) {
+        if (!isDup) {
             return postRepository.addPost(newPost);
         }
         throw new Duplicated();
-
     }
-/*
-    public void deletePostById(Integer id) {
-        if (!postRepository.deletePostById(id)) {
+
+    public void deletePostById(String id) throws Exception {
+
+        if (postRepository.getPostById(id).equals(null)) {
             throw new NotFound(id);
         }
+        postRepository.deletePostById(id);
     }
 
-    public Post updatePost(Integer id, PostDTO postDTO) {
+    public String updatePost(String id, PostDTO postDTO) throws Exception {
         Post post = modelMapper.map(postDTO, Post.class);
         return postRepository.updatePostById(id, post);
     }
-*/
 }

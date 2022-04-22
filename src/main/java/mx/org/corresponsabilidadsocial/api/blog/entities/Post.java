@@ -1,9 +1,12 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
+import javax.annotation.Generated;
+
 import com.google.cloud.Timestamp;
 
 public class Post {
 
+ 
     private String id;
     private String title;
     private String imageUrl;
