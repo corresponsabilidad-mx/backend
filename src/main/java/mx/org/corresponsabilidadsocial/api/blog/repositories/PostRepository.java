@@ -1,6 +1,5 @@
 package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import com.google.api.core.ApiFuture;

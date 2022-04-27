@@ -27,7 +27,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         @ExceptionHandler(Duplicated.class)
-        @ResponseStatus(code = HttpStatus.NOT_FOUND)
+        @ResponseStatus(code = HttpStatus.CONFLICT)
         @ResponseBody
         public ResponseEntity<Object> notFound(Duplicated ex, WebRequest request) {
                 return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);

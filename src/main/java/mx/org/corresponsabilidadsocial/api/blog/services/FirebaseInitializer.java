@@ -26,7 +26,7 @@ public class FirebaseInitializer {
         FileInputStream serviceAccount = new FileInputStream(file.getAbsolutePath());
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://blog-csm.firebaseio.com/")
+                .setDatabaseUrl("https://csm-blog-86d4d.firebaseio.com/")
                 .build();
         FirebaseApp.initializeApp(options);
     }

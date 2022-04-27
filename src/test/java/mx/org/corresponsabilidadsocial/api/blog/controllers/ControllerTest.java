@@ -49,7 +49,7 @@ public class ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         var obj = objectMapper.readValue(findById.getResponse().getContentAsString(), Post.class);
-        assert obj.getId().equals(1);
+       assert obj.getId().equals(1);
        
     }
 

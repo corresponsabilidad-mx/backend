@@ -1,12 +1,7 @@
 package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
-import java.util.Optional;
-
-import com.google.cloud.firestore.DocumentReference;
-
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.asm.Advice.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

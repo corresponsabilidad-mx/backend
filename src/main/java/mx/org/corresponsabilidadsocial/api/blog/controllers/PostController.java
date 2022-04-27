@@ -1,6 +1,9 @@
 package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
 import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
+
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +55,9 @@ public class PostController {
         return new ResponseEntity<>("Test get Endpoint is working", HttpStatus.OK);
     }
        
+    @GetMapping(path = "/testtoken")
+    public String test(Principal principal) {
+        return principal.getName();
+    }
 
 }
