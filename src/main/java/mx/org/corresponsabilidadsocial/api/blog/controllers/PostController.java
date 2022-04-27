@@ -6,6 +6,7 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+import mx.org.corresponsabilidadsocial.api.blog.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -22,6 +23,9 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    FileService fileService;
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPosts() throws Exception {
@@ -58,6 +62,11 @@ public class PostController {
     @GetMapping(path = "/testtoken")
     public String test(Principal principal) {
         return principal.getName();
+    }
+
+    @PostMapping("/post/upload/pic")
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile multipartFile) {
+        return new ResponseEntity<>(fileService.upload(multipartFile), HttpStatus.OK);
     }
 
 }
