@@ -53,10 +53,13 @@ public class ControllerTest {
        
     }
 
+
     private Post createPost() {
         Post post = new Post("string", "un titulo no muy corto", "img/img.jpg", "un texto de por lo menos 100 caracteres " +
                 "porque si no da error y no me gustan las peliculas de star wars", Timestamp.now(), Status.PUBLISHED);
 
         return post;
     }
+
+
 }

@@ -25,6 +25,7 @@ public class ServiceTest {
     @Mock
     PostRepository repo;
 
+
     @Test
     public void testFindAllPosts() {
         List<Post> list = new ArrayList<Post>();
@@ -43,5 +44,4 @@ public class ServiceTest {
         //assertEquals(3, postList.size());
         //verify(repo, times(1)).getPosts();
     }
-
 }

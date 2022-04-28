@@ -1,0 +1,10 @@
+{
+  "name": "images-blog-csm",
+  "location": "US-CENTRAL1",
+  "storageClass": "STANDARD",
+  "iamConfiguration": {
+    "uniformBucketLevelAccess": {
+      "enabled": true
+    }
+  }
+}

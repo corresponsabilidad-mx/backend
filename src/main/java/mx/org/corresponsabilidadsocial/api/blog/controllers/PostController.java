@@ -53,11 +53,6 @@ public class PostController {
         postService.deletePostById(id);
         return new ResponseEntity<>("deleted", HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> testGetEndpoint(){
-        return new ResponseEntity<>("Test get Endpoint is working", HttpStatus.OK);
-    }
        
     @GetMapping(path = "/testtoken")
     public String test(Principal principal) {

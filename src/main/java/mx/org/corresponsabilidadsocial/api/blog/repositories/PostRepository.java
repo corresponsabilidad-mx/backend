@@ -17,6 +17,9 @@ public class PostRepository {
     @Autowired
     private FirebaseInitializer firebaseInitializer;
 
+    @Autowired
+    FileRepository fileRepository;
+
     public List<Post> getPosts() throws Exception {
 
         List<Post> posts = new ArrayList<>();
