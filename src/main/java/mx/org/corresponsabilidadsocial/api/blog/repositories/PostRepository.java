@@ -42,6 +42,7 @@ public class PostRepository {
     }
 
     public String addPost(Post post) throws Exception {
+        post.setId(UUID.randomUUID().toString());
         Map<String, Object> docData = new HashMap<>();
         docData.put("id", post.getId());
         docData.put("title", post.getTitle());
