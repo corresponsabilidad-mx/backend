@@ -1,12 +1,17 @@
 package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiService;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.internal.NonNull;
 import mx.org.corresponsabilidadsocial.api.blog.services.FirebaseInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
@@ -28,12 +33,16 @@ public class PostRepository {
 
         while (iterator.hasNext()) {
             posts.add(iterator.next().get().get().toObject(Post.class));
+
+
         }
         return posts;
     }
 
     public String addPost(Post post) throws Exception {
+        post.setId(UUID.randomUUID().toString());
         Map<String, Object> docData = new HashMap<>();
+        docData.put("id", post.getId());
         docData.put("title", post.getTitle());
         docData.put("imageUrl", post.getImageUrl());
         docData.put("text", post.getText());
@@ -41,14 +50,9 @@ public class PostRepository {
         docData.put("status", post.getStatus());
 
         ApiFuture<DocumentReference> addedDocRef = getCollection().add(docData);
-       
+
 
         return "A post was created with id: " + addedDocRef.get().getId();
-    }
-
-    public Post getPostById(String id) throws Exception {
-        ApiFuture<DocumentSnapshot> futureResult= getCollection().document(id).get();
-        return futureResult.get().toObject(Post.class);
     }
 
     public String deletePostById(String id) {

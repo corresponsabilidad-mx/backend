@@ -24,8 +24,7 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    @Autowired
-    FileService fileService;
+
 
     @GetMapping("/posts")
     public ResponseEntity<?> getPosts() throws Exception {
@@ -42,7 +41,6 @@ public class PostController {
         return new ResponseEntity<>(postService.savePost(postDTO), HttpStatus.CREATED);
     }
 
-    
     @PutMapping("post/update/{id}")
     public ResponseEntity<?> updatePost(@PathVariable String id, @Valid @RequestBody PostDTO postDTO) throws Exception {
         return new ResponseEntity<>(postService.updatePost(id, postDTO), HttpStatus.ACCEPTED);
@@ -59,9 +57,6 @@ public class PostController {
         return principal.getName();
     }
 
-    @PostMapping("/post/upload/pic")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile multipartFile) {
-        return new ResponseEntity<>(fileService.upload(multipartFile), HttpStatus.OK);
-    }
+
 
 }

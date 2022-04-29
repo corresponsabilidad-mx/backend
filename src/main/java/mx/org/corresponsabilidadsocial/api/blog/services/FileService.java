@@ -32,23 +32,4 @@ public class FileService {
         }
     }
 
-    /*
-    public void uploadFile(MultipartFile multipartFile, String path) throws IOException {
-        String objectName = generateFileName(multipartFile);
-        StorageOptions storageOptions = StorageOptions.newBuilder()
-                .setProjectId("my-project")
-                .setCredentials(GoogleCredentials
-                        .fromStream(new ClassPathResource("firebase_admin.json").getInputStream()))
-                .build();
-        Storage storage = storageOptions.getService();
-        BlobId blobId = BlobId.of("bucket-name", objectName);
-
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(multipartFile.getContentType()).build();
-
-        Blob blob = storage.create(blobInfo, multipartFile.getBytes());
-
-        System.out.println("UPLOAD FILE" + multipartFile.getName() + " " + multipartFile.getSize() + " octet");
-
-    }
-    */
 }

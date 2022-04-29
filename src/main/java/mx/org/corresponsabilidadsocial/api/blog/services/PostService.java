@@ -1,6 +1,8 @@
 package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,12 @@ public class PostService {
     }
 
     public Post getPostById(String id) throws Exception {
-        Post post = postRepository.getPostById(id);
-        if (!post.equals(null)) {
-            return post;
-        }
-        throw new NotFound(id);
+        Optional<Post> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+
+        return opt.orElseThrow(() -> new NotFound(id));
     }
 
     public String savePost(PostDTO postDTO) throws Exception {
@@ -45,11 +48,14 @@ public class PostService {
     }
 
     public void deletePostById(String id) throws Exception {
-
-        if (postRepository.getPostById(id).equals(null)) {
+        Optional<Post> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+        if (!opt.isPresent()) {
             throw new NotFound(id);
         }
-        postRepository.deletePostById(id);
+        postRepository.deletePostById(opt.get().getId());
     }
 
     public String updatePost(String id, PostDTO postDTO) throws Exception {
