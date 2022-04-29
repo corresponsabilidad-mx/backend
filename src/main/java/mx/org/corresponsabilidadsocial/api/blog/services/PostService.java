@@ -23,11 +23,11 @@ public class PostService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public List<Post> getPosts() throws ExecutionException, InterruptedException {
+    public List<PostDTO> getPosts() throws Exception {
         return postRepository.getPosts();
     }
-
-    public Post getPostById(String id) throws ExecutionException, InterruptedException {
+/*
+    public PostDTO getPostById(String id) throws ExecutionException, InterruptedException {
         Optional<Post> opt = postRepository.getPosts()
                 .stream()
                 .filter(post -> post.getId().equals(id))
@@ -48,7 +48,7 @@ public class PostService {
         throw new Duplicated();
 
     }
-/*
+
     public void deletePostById(Integer id) {
         if (!postRepository.deletePostById(id)) {
             throw new NotFound(id);
