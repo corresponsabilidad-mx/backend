@@ -32,9 +32,9 @@ public class ServiceTest {
     @Test
     public void testFindAllPosts() {
         List<Post> list = new ArrayList<Post>();
-        Post postOne = new Post("String 1", "title", "img/image.jpg", "test text", Timestamp.now(), Status.PUBLISHED);
-        Post postTwo = new Post("String 2", "hi!", "img/otherimage.jpg", "test text 1", Timestamp.now(), Status.PUBLISHED);
-        Post postThree = new Post("String 3", "bye", "img/img2.jpg", "test text 2", Timestamp.now(), Status.PUBLISHED);
+        Post postOne = new Post("title", "img/image.jpg", "test text", Timestamp.now(), Status.PUBLISHED);
+        Post postTwo = new Post("hi!", "img/otherimage.jpg", "test text 1", Timestamp.now(), Status.PUBLISHED);
+        Post postThree = new Post("bye", "img/img2.jpg", "test text 2", Timestamp.now(), Status.PUBLISHED);
 
         list.add(postOne);
         list.add(postTwo);

@@ -1,9 +1,7 @@
 package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
-
 import java.util.*;
 
-import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
@@ -45,14 +43,13 @@ public class PostRepository {
 
         ApiFuture<DocumentReference> addedDocRef = getCollection().add(docData);
 
-
         return "A post was created with id: " + addedDocRef.get().getId();
     }
 
     public String deletePostById(String id) {
         ApiFuture<WriteResult> writeResult = getCollection().document(id).delete();
 
-        return "Succesfully deleted, post id: " + writeResult.toString();
+        return "Succesfully deleted, post id: " + writeResult;
     }
 
     public String updatePostById(String id, Post post) throws Exception {

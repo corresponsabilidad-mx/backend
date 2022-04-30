@@ -3,6 +3,7 @@ package mx.org.corresponsabilidadsocial.api.blog.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.google.cloud.Timestamp;
 import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
 
 public class PostDTO {
@@ -16,7 +17,10 @@ public class PostDTO {
     @NotBlank(message = "Text is mandatory")
     @Size(min = 100, message = "The text is too short (minimum 100 characters)")
     private String text;
+    private Timestamp date;
     private Status status;
+
+    public PostDTO(){}
 
     public PostDTO(String id, String title, String imageUrl, String text, Status status) {
         this.id = id;
@@ -52,6 +56,14 @@ public class PostDTO {
 
     public String getText() {
         return text;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public void setText(String text) {
