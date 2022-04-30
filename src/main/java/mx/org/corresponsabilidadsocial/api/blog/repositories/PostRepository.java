@@ -2,7 +2,6 @@ package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
 import java.util.*;
 
-
 import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
@@ -22,10 +21,9 @@ public class PostRepository {
     public List<PostDTO> getPosts() throws Exception {
 
         List<PostDTO> posts = new ArrayList<>();
-        PostDTO post;
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
         for (DocumentSnapshot doc: querySnapshotApiFuture.get().getDocuments()){
-            post = doc.toObject(PostDTO.class);
+            PostDTO post = doc.toObject(PostDTO.class);
             post.setId(doc.getId());
             posts.add(post);
         }
@@ -33,7 +31,6 @@ public class PostRepository {
     }
 
     public String addPost(Post post) throws Exception {
-        //post.setId(UUID.randomUUID().toString());
         Map<String, Object> docData = new HashMap<>();
         docData.put("title", post.getTitle());
         docData.put("imageUrl", post.getImageUrl());
@@ -53,7 +50,6 @@ public class PostRepository {
     }
 
     public String updatePostById(String id, Post post) throws Exception {
-
         DocumentReference documentReference = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();

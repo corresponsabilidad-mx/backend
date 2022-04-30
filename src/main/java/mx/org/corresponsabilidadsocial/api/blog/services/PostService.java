@@ -2,7 +2,6 @@ package mx.org.corresponsabilidadsocial.api.blog.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,6 @@ public class PostService {
             return postRepository.addPost(newPost);
         }
         throw new Duplicated();
-
     }
 
     public void deletePostById(String id) throws Exception {
