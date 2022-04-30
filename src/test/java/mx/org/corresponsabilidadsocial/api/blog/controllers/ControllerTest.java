@@ -34,7 +34,7 @@ public class ControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
+/*
     @Test
     void findById() throws Exception {
         Post post = createPost();
@@ -49,17 +49,14 @@ public class ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         var obj = objectMapper.readValue(findById.getResponse().getContentAsString(), Post.class);
-       assert obj.getId().equals(1);
+        assert obj.getId().equals(1);
        
     }
-
-
+*/
     private Post createPost() {
-        Post post = new Post("string", "un titulo no muy corto", "img/img.jpg", "un texto de por lo menos 100 caracteres " +
+        Post post = new Post("un titulo no muy corto", "img/img.jpg", "un texto de por lo menos 100 caracteres " +
                 "porque si no da error y no me gustan las peliculas de star wars", Timestamp.now(), Status.PUBLISHED);
 
         return post;
     }
-
-
 }

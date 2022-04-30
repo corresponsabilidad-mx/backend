@@ -4,7 +4,6 @@ import com.google.cloud.Timestamp;
 
 public class Post {
 
-    private String id;
     private String title;
     private String imageUrl;
     private String text;
@@ -14,8 +13,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String id, String title, String imageUrl, String text, Timestamp date, Status status) {
-        this.id = id;
+    public Post(String title, String imageUrl, String text, Timestamp date, Status status) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.text = text;
@@ -23,13 +21,6 @@ public class Post {
         this.status = status;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

@@ -2,6 +2,8 @@ package mx.org.corresponsabilidadsocial.api.blog.controllers;
 
 import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
 
+import java.util.List;
+
 import java.security.Principal;
 
 import javax.validation.Valid;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,10 +25,8 @@ public class PostController {
     @Autowired
     PostService postService;
 
-
-
     @GetMapping("/posts")
-    public ResponseEntity<?> getPosts() throws Exception {
+    public ResponseEntity<List<PostDTO>> getPosts() throws Exception {
         return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
@@ -43,20 +42,19 @@ public class PostController {
 
     @PutMapping("post/update/{id}")
     public ResponseEntity<?> updatePost(@PathVariable String id, @Valid @RequestBody PostDTO postDTO) throws Exception {
-        return new ResponseEntity<>(postService.updatePost(id, postDTO), HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(postService.updatePost(id, postDTO));
     }
 
     @DeleteMapping("/post/delete/{id}")
     public ResponseEntity<?> deletePost(@PathVariable String id) throws Exception {
         postService.deletePostById(id);
-        return new ResponseEntity<>("deleted", HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
-       
+
     @GetMapping(path = "/testtoken")
     public String test(Principal principal) {
         return principal.getName();
     }
-
-
+       
 
 }

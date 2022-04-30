@@ -22,12 +22,12 @@ public class PostService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public List<Post> getPosts() throws Exception {
+    public List<PostDTO> getPosts() throws Exception {
         return postRepository.getPosts();
     }
 
-    public Post getPostById(String id) throws Exception {
-        Optional<Post> opt = postRepository.getPosts()
+    public PostDTO getPostById(String id) throws Exception {
+        Optional<PostDTO> opt = postRepository.getPosts()
                 .stream()
                 .filter(post -> post.getId().equals(id))
                 .findFirst();
@@ -37,29 +37,37 @@ public class PostService {
 
     public String savePost(PostDTO postDTO) throws Exception {
         Post newPost = modelMapper.map(postDTO, Post.class);
-        Boolean isDup = postRepository.getPosts().stream()
+        Boolean check = postRepository.getPosts().stream()
                 .filter(p -> p.getTitle().equals(newPost.getTitle()))
-                .findFirst()
+                .findAny()
                 .isPresent();
-        if (!isDup) {
+        if (!check) {
             return postRepository.addPost(newPost);
         }
         throw new Duplicated();
     }
 
     public void deletePostById(String id) throws Exception {
-        Optional<Post> opt = postRepository.getPosts()
+        Optional<PostDTO> opt = postRepository.getPosts()
                 .stream()
                 .filter(post -> post.getId().equals(id))
                 .findFirst();
         if (!opt.isPresent()) {
             throw new NotFound(id);
         }
-        postRepository.deletePostById(opt.get().getId());
+        postRepository.deletePostById(id);
     }
 
     public String updatePost(String id, PostDTO postDTO) throws Exception {
+        Optional<PostDTO> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+        if (!opt.isPresent()) {
+            throw new NotFound(id);
+        }
         Post post = modelMapper.map(postDTO, Post.class);
         return postRepository.updatePostById(id, post);
     }
+
 }
