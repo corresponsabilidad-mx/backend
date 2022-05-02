@@ -4,14 +4,19 @@ import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
 
 import java.util.List;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
+import mx.org.corresponsabilidadsocial.api.blog.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import mx.org.corresponsabilidadsocial.api.blog.services.PostService;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("/blog")
@@ -46,9 +51,9 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> testGetEndpoint(){
-        return ResponseEntity.ok("Test get Endpoint is working");
+    @GetMapping(path = "/testtoken")
+    public String test(Principal principal) {
+        return principal.getName();
     }
        
 

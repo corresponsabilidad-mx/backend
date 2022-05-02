@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.LinkedHashMap;
@@ -27,7 +28,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         @ExceptionHandler(Duplicated.class)
-        @ResponseStatus(code = HttpStatus.NOT_FOUND)
+        @ResponseStatus(code = HttpStatus.CONFLICT)
         @ResponseBody
         public ResponseEntity<Object> notFound(Duplicated ex, WebRequest request) {
                 return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -53,11 +54,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
-        @ExceptionHandler(ExecutionException.class)
+        @ExceptionHandler(MaxUploadSizeExceededException.class)
         @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
         @ResponseBody
-        public ResponseEntity<Object> handleAll(ExecutionException ex, WebRequest request) {
-                return new ResponseEntity<Object>(ex.getCause(),
+        public ResponseEntity<String> handleAll(MaxUploadSizeExceededException m, WebRequest request) {
+                return new ResponseEntity<String>("File too large!",
                         HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

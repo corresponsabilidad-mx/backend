@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.Objects;
 
 @Service
@@ -20,17 +20,18 @@ public class FirebaseInitializer {
     @PostConstruct
     private void initDB() throws IOException {
 
-        ClassLoader  classLoader = FirebaseInitializer.class.getClassLoader();
-        File file = new File(Objects.requireNonNull(classLoader.getResource("blog-csm-firebase-adminsdk.json")).getFile());
+        ClassLoader classLoader = FirebaseInitializer.class.getClassLoader();
+        File file = new File(
+                Objects.requireNonNull(classLoader.getResource("blog-csm-firebase-adminsdk.json")).getFile());
         FileInputStream serviceAccount = new FileInputStream(file.getAbsolutePath());
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://blog-csm.firebaseio.com/")
+                .setDatabaseUrl("https://blog-csm.southamerica-east1.firebasedatabase.app")
                 .build();
         FirebaseApp.initializeApp(options);
     }
 
-    public Firestore getFirestore(){
+    public Firestore getFirestore() {
         return FirestoreClient.getFirestore();
     }
 }
