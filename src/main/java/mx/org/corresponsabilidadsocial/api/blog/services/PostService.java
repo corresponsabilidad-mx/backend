@@ -22,16 +22,12 @@ public class PostService {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public List<Post> getPosts() {
+    public List<PostDTO> getPosts() throws Exception {
         return postRepository.getPosts();
     }
 
-    public void savePost(Post post) {
-        postRepository.addPost(post);
-    }
-
-    public Post getPostById(Integer id) {
-        Optional<Post> opt = postRepository.getPosts()
+    public PostDTO getPostById(String id) throws Exception {
+        Optional<PostDTO> opt = postRepository.getPosts()
                 .stream()
                 .filter(post -> post.getId().equals(id))
                 .findFirst();
@@ -39,7 +35,7 @@ public class PostService {
         return opt.orElseThrow(() -> new NotFound(id));
     }
 
-    public Post savePost(PostDTO postDTO) {
+    public String savePost(PostDTO postDTO) throws Exception {
         Post newPost = modelMapper.map(postDTO, Post.class);
         Boolean check = postRepository.getPosts().stream()
                 .filter(p -> p.getTitle().equals(newPost.getTitle()))
@@ -49,16 +45,27 @@ public class PostService {
             return postRepository.addPost(newPost);
         }
         throw new Duplicated();
-
     }
 
-    public void deletePostById(Integer id) {
-        if (!postRepository.deletePostById(id)) {
+    public void deletePostById(String id) throws Exception {
+        Optional<PostDTO> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+        if (!opt.isPresent()) {
             throw new NotFound(id);
         }
+        postRepository.deletePostById(id);
     }
 
-    public Post updatePost(Integer id, PostDTO postDTO) {
+    public String updatePost(String id, PostDTO postDTO) throws Exception {
+        Optional<PostDTO> opt = postRepository.getPosts()
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst();
+        if (!opt.isPresent()) {
+            throw new NotFound(id);
+        }
         Post post = modelMapper.map(postDTO, Post.class);
         return postRepository.updatePostById(id, post);
     }

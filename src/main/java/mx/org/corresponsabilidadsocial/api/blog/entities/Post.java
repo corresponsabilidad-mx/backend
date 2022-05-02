@@ -1,29 +1,19 @@
 package mx.org.corresponsabilidadsocial.api.blog.entities;
 
-import java.time.LocalDate;
+import com.google.cloud.Timestamp;
 
 public class Post {
 
-    private Integer Id;
     private String title;
     private String imageUrl;
     private String text;
-    private LocalDate date;
+    private Timestamp date;
     private Status status;
 
     public Post() {
     }
 
-    public Post(Integer id, String title, String imageUrl, String text, Status status) {
-        Id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.text = text;
-        this.status = status;
-    }
-
-    public Post(Integer id, String title, String imageUrl, String text, LocalDate date, Status status) {
-        Id = id;
+    public Post(String title, String imageUrl, String text, Timestamp date, Status status) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.text = text;
@@ -31,13 +21,6 @@ public class Post {
         this.status = status;
     }
 
-    public Integer getId() {
-        return Id;
-    }
-
-    public void setId(Integer id) {
-        Id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -63,11 +46,11 @@ public class Post {
         this.text = text;
     }
 
-    public LocalDate getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

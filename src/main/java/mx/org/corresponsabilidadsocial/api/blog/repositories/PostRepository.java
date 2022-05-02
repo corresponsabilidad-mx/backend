@@ -1,67 +1,73 @@
 package mx.org.corresponsabilidadsocial.api.blog.repositories;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.List;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.*;
+import mx.org.corresponsabilidadsocial.api.blog.dto.PostDTO;
+import mx.org.corresponsabilidadsocial.api.blog.services.FirebaseInitializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mx.org.corresponsabilidadsocial.api.blog.entities.Post;
-import mx.org.corresponsabilidadsocial.api.blog.entities.Status;
-import mx.org.corresponsabilidadsocial.api.blog.exceptions.NotFound;
 
 @Repository
 public class PostRepository {
 
-    private List<Post> posts = new ArrayList<>();
+    @Autowired
+    private FirebaseInitializer firebaseInitializer;
 
-    public PostRepository() {
-        posts.add(new Post(1, "title", "img/image.jpg", "test text", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(2, "hi!", "img/otherimage.jpg", "test text 1", LocalDate.now(), Status.PUBLISHED));
-        posts.add(new Post(3, "bye", "img/img2.jpg", "test text 2", LocalDate.now(), Status.PUBLISHED));
-    }
+    public List<PostDTO> getPosts() throws Exception {
 
-    public List<Post> getPosts() {
+        List<PostDTO> posts = new ArrayList<>();
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        for (DocumentSnapshot doc: querySnapshotApiFuture.get().getDocuments()){
+            PostDTO post = doc.toObject(PostDTO.class);
+            post.setId(doc.getId());
+            posts.add(post);
+        }
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public String addPost(Post post) throws Exception {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("title", post.getTitle());
+        docData.put("imageUrl", post.getImageUrl());
+        docData.put("text", post.getText());
+        docData.put("date", Timestamp.now().toDate());
+        docData.put("status", post.getStatus());
+
+        ApiFuture<DocumentReference> addedDocRef = getCollection().add(docData);
+
+        return "A post was created with id: " + addedDocRef.get().getId();
     }
 
-    public Post addPost(Post post) {
-        int id = posts.size() + 1;
-        post.setId(id);
-        post.setDate(LocalDate.now());
-        posts.add(post);
-        return post;
+    public String deletePostById(String id) {
+        ApiFuture<WriteResult> writeResult = getCollection().document(id).delete();
+
+        return "Succesfully deleted, post id: " + writeResult;
     }
 
-    public Post getPostById(Integer id) {
-        return posts.get(id);
+    public String updatePostById(String id, Post post) throws Exception {
+        DocumentReference documentReference = getCollection().document(id);
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
+        DocumentSnapshot document = future.get();
+
+        Map<String, Object> docData = document.getData();
+
+        docData.put("title", post.getTitle());
+        docData.put("imageUrl", post.getImageUrl());
+        docData.put("text", post.getText());
+        docData.put("date", Timestamp.now().toDate());
+        docData.put("status", post.getStatus());
+
+        ApiFuture<WriteResult> writeResultApiFuture = getCollection().document(id).update(docData);
+
+        return "Succesfully updated, post id: " + id + "datetime: " + writeResultApiFuture.get().getUpdateTime();
     }
 
-    public boolean deletePostById(Integer id) {
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(id)) {
-                posts.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Post updatePostById(Integer id, Post post) {
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId().equals(id)) {
-                posts.get(i).setTitle(post.getTitle());
-                posts.get(i).setText(post.getText());
-                posts.get(i).setImageUrl(post.getImageUrl());
-                posts.get(i).setStatus(post.getStatus());
-                posts.get(i).setDate(LocalDate.now());
-                return posts.get(i);
-            }
-        }
-        throw new NotFound(id);
+    private CollectionReference getCollection() {
+        return firebaseInitializer.getFirestore().collection("posts");
     }
 }
